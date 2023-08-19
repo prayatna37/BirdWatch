@@ -13,9 +13,20 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name', // Add 'name' to the fillable attributes
+        'email',
+        'password',
+    ];
+
     public function posts()
     {
         return $this->hasMany('App\Models\Post');
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 
 

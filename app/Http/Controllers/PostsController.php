@@ -88,6 +88,14 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $post = Post::findOrFail($id);
+        if (Auth::user()->id === $post->user_id) {
+            $post->delete();
+
+            return back()->with('success', 'Post deleted successfully.');
+        } else {
+            return back();
+        }
     }
 }
