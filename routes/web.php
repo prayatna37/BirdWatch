@@ -20,3 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Add Post View
+Route::get('/addposts', [App\Http\Controllers\PostsController::class, 'index'])->name('post.view');
+
+Route::post('/createpost', [App\Http\Controllers\PostsController::class, 'store'])->name('post.create');

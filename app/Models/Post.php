@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Post extends Model
 {
     public function user()
     {
-        return $this->belongsto(User::class);
+        return $this->belongsTo('App\Models\User');
     }
     use HasFactory;
 }

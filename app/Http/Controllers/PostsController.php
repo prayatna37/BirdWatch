@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+
+
 
 class PostsController extends Controller
 {
@@ -16,7 +20,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        return view('posts');
     }
 
     /**
@@ -24,7 +28,6 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -32,7 +35,28 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'status' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+
+        ]);
+        //image 
+        // $imagePath = $request->file('image')->store('images', 'public');
+        // dd($imagePath);
+        $post = new Post();
+        $post->status = request('status');
+        $post->location = request('location');
+        if (request()->hasfile('image')) {
+
+            $file = request('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            Image::make($file)->save(public_path('uploads/userposts/' . $filename));
+            $post->image = $filename;
+        }
+        // $post->save();
+        request()->user()->posts()->save($post);
+        return back()->with('success', 'Post Successfully Added');
     }
 
     /**
