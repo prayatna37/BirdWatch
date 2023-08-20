@@ -37,15 +37,16 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'status' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
 
         ]);
-        //image 
-        // $imagePath = $request->file('image')->store('images', 'public');
-        // dd($imagePath);
+
         $post = new Post();
         $post->status = request('status');
         $post->location = request('location');
+        $post->latitude = $request->input('latitude');
+        $post->longtitude = $request->input('longtitude');
+
         if (request()->hasfile('image')) {
 
             $file = request('image');
@@ -54,7 +55,7 @@ class PostsController extends Controller
             Image::make($file)->save(public_path('uploads/userposts/' . $filename));
             $post->image = $filename;
         }
-        // $post->save();
+
         request()->user()->posts()->save($post);
         return back()->with('success', 'Post Successfully Added');
     }

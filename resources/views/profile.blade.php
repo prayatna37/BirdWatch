@@ -12,6 +12,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{$userprofile->fullname}}</h5>
                     <p class="card-subtitle mb-2 text-muted"><span>User Email: </span> {{$userprofile->email}}</p>
+                    <p class="card-subtitle mb-2 text-muted"><span>User Email: </span> {{$userprofile->username}}</p>
                     <p class="card-subtitle mb-2 text-muted"><span>Date of Birth </span> {{$userprofile->dob}}</p>
                     <p class="card-text">{{$userprofile->bio}}</p>
                     <p class="card-subtitle mb-2 text-muted"><span>Address </span>{{$userprofile->address}}</p>
@@ -24,12 +25,13 @@
                 <div class="col-md-2">
                     <a class="navbar-brand" href="#" onclick="userposts()">User Posts</a>
                 </div>
+                @auth
                 @if(auth()->user()->id===$userprofile->user_id)
                 <div class="col-md-2">
                     <a class="navbar-brand" onclick="profileedit()" href="#">Profile Edit</a>
                 </div>
                 @endif
-
+                @endauth
             </div>
             <div id="user-posts">
                 <div class="row">
@@ -43,6 +45,7 @@
                                 @endif
                                 <p class="card-text">{{$post->status}}</p>
                                 <p class="card-text">{{$post->location}}</p>
+                                @auth
                                 @if(auth()->user()->id===$userprofile->user_id)
                                 <form action="/post/destroy/{{$post->id}}" method="POST">
                                     @csrf
@@ -50,12 +53,9 @@
                                     <button type="submit" class="btn btn-danger">Delete Post</button>
                                 </form>
                                 @endif
+                                @endauth
                             </div>
                         </div>
-
-
-
-
                     </div>
                     @endforeach
                 </div>

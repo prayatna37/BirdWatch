@@ -25,6 +25,8 @@
 </head>
 
 <body onload="initializePage()">
+    @include('partials.error')
+    @include('partials.success')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -57,9 +59,10 @@
                         </li>
                         @endif
                         @else
-                        
+
                         <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item"><a href="/profile/{{ Auth::user()->id }}">Profile</a></li>
+                            <li class="list-group-item"><a href="/addposts">Add New Post</a></li>
+                            <li class="list-group-item">@<a href="/profile/{{ Auth::user()->id }}">{{Auth::user()->username}}</a></li>
                             <li class="list-group-item"> <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}

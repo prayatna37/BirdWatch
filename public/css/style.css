@@ -12,3 +12,8 @@
   width: auto;
   height: 500px;
 }
+
+.error-message {
+  color: red;
+  font-size: 14px;
+}

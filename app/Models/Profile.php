@@ -16,6 +16,7 @@ class Profile extends Model
         'contact',
         'address',
         'dob',
+        'username',
 
     ];
     public function user()
