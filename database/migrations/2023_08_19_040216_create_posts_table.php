@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('status');
             $table->text('image')->nullable();
-            $table->string('location');
+            $table->string('location')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longtitude', 10, 8)->nullable();
+            $table->decimal('longitude', 10, 8)->nullable();
             $table->integer('user_id');
 
             $table->timestamps();

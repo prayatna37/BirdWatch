@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
 
@@ -38,6 +39,9 @@ class PostsController extends Controller
         $this->validate($request, [
             'status' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+            'location' => 'nullable',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
 
         ]);
 
@@ -45,7 +49,7 @@ class PostsController extends Controller
         $post->status = request('status');
         $post->location = request('location');
         $post->latitude = $request->input('latitude');
-        $post->longtitude = $request->input('longtitude');
+        $post->longitude = $request->input('longitude');
 
         if (request()->hasfile('image')) {
 
@@ -96,7 +100,7 @@ class PostsController extends Controller
 
             return back()->with('success', 'Post deleted successfully.');
         } else {
-            return back();
+            return back()->with('error', 'Your are not authorized to delete.');
         }
     }
 }

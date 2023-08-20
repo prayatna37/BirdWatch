@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->integer('contact')->nullable();
             $table->string('address')->nullable();
-            $table->string('dob')->nullable();
+            $table->date('dob')->nullable();
             $table->string('email')->unique();
             $table->integer('user_id')->nullable();
             $table->text('profilepicture')->nullable();

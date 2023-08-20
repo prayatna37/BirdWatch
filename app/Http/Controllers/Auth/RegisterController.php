@@ -65,8 +65,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-
+        $validator = Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|alpha_num|min:5|max:255|unique:users',
+            'password' => 'required|string|alpha_num|min:8|confirmed',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
         $user = new User();
         $user->name = $data['name'];
         $user->email = $data['email'];

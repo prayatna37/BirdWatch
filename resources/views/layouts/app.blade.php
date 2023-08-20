@@ -25,7 +25,7 @@
 </head>
 
 <body onload="initializePage()">
-    @include('partials.error')
+    <!-- @include('partials.error') -->
     @include('partials.success')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
