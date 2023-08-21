@@ -130,62 +130,68 @@
     </div>
 </div>
 <script>
-    const nameInput = document.getElementById('fullname');
-    const nameValidationError = document.getElementById('fullname-validation-error');
+    $(document).ready(function() {
+        // Validating name
+        const nameInput = $('#fullname');
+        const nameValidationError = $('#fullname-validation-error');
 
-    nameInput.addEventListener('input', () => {
-        const nameValue = nameInput.value;
+        nameInput.on('input', function() {
+            const nameValue = nameInput.val();
 
-        if (nameValue.length > 0) {
-
-            if (nameValue.length < 3) {
-                nameInput.classList.add('is-invalid');
-                nameValidationError.textContent = 'Name must be at least 3 characters.';
+            if (nameValue.length > 0) {
+                if (nameValue.length < 3) {
+                    nameInput.addClass('is-invalid');
+                    nameValidationError.text('Name must be at least 3 characters.');
+                } else {
+                    nameInput.removeClass('is-invalid');
+                    nameValidationError.text('');
+                }
             } else {
-                nameInput.classList.remove('is-invalid');
-                nameValidationError.textContent = '';
+                nameInput.removeClass('is-invalid');
+                nameValidationError.text('');
             }
-        } else {
-            nameInput.classList.remove('is-invalid');
-            nameValidationError.textContent = '';
+        });
+
+        // Validating email
+        const emailInput = $('#email');
+
+        emailInput.on('input', function() {
+            validateEmail(emailInput);
+        });
+
+        function validateEmail(input) {
+            const validationError = $('#email-validation-error');
+            const email = input.val();
+
+            if (!email.includes('@')) {
+                input.addClass('is-invalid');
+                validationError.text('Email must contain "@" symbol.');
+            } else {
+                input.removeClass('is-invalid');
+                validationError.text('');
+            }
+        }
+
+        // Validating contact
+        const contactInput = $('#contact');
+
+        contactInput.on('input', function() {
+            validateContactField(contactInput);
+        });
+
+        function validateContactField(input) {
+            const validationError = $('#contact-validation-error');
+            const contactValue = input.val();
+
+            if (!/^\d{1,10}$/.test(contactValue)) {
+                input.addClass('is-invalid');
+                validationError.text('Please enter a valid contact number with up to 10 digits.');
+            } else {
+                input.removeClass('is-invalid');
+                validationError.text('');
+            }
         }
     });
-    const emailInput = document.getElementById('email');
-
-    emailInput.addEventListener('input', () => {
-        validateEmail(emailInput);
-    });
-
-    function validateEmail(input) {
-        const validationError = document.getElementById('email-validation-error');
-        const email = input.value;
-
-        if (!email.includes('@')) {
-            input.classList.add('is-invalid');
-            validationError.textContent = 'Email must contain "@" symbol.';
-        } else {
-            input.classList.remove('is-invalid');
-            validationError.textContent = '';
-        }
-    }
-    const contactInput = document.getElementById('contact');
-
-    contactInput.addEventListener('input', () => {
-        validateContactField(contactInput);
-    });
-
-    function validateContactField(contactInput) {
-        const validationError = document.getElementById('contact-validation-error');
-        const contactValue = contactInput.value;
-
-        if (!/^\d{1,10}$/.test(contactValue)) {
-            contactInput.classList.add('is-invalid');
-            validationError.textContent = 'Please enter a valid contact number with up to 10 digits.';
-        } else {
-            contactInput.classList.remove('is-invalid');
-            validationError.textContent = '';
-        }
-    }
 </script>
 
 

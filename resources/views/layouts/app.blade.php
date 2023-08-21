@@ -22,6 +22,7 @@
     <script src="{{ URL::to('js/app.js') }}"></script>
 
     <script src="{{URL::to('js/custom.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body onload="initializePage()">

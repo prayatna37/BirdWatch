@@ -90,115 +90,116 @@
 </div>
 
 <script>
-    const nameInput = document.getElementById('name');
-    const nameValidationError = document.getElementById('name-validation-error');
+    $(document).ready(function() {
+        // Validating name
+        const nameInput = $('#name');
+        const nameValidationError = $('#name-validation-error');
 
-    nameInput.addEventListener('input', () => {
-        const nameValue = nameInput.value;
+        nameInput.on('input', function() {
+            const nameValue = nameInput.val();
 
-        if (nameValue.length > 0) {
-
-            if (nameValue.length < 3) {
-                nameInput.classList.add('is-invalid');
-                nameValidationError.textContent = 'Name must be at least 3 characters.';
+            if (nameValue.length > 0) {
+                if (nameValue.length < 3) {
+                    nameInput.addClass('is-invalid');
+                    nameValidationError.text('Name must be at least 3 characters.');
+                } else {
+                    nameInput.removeClass('is-invalid');
+                    nameValidationError.text('');
+                }
             } else {
-                nameInput.classList.remove('is-invalid');
-                nameValidationError.textContent = '';
+                nameInput.removeClass('is-invalid');
+                nameValidationError.text('');
             }
-        } else {
-            nameInput.classList.remove('is-invalid');
-            nameValidationError.textContent = '';
+        });
+
+        // Validating username
+
+        const usernameInput = $('#username');
+        const usernameValidationError = $('#username-validation-error');
+
+        usernameInput.on('input', function() {
+            validateUsername(usernameInput);
+        });
+
+        function validateUsername(input) {
+            const username = input.val();
+
+            if (username.length < 5) {
+                input.addClass('is-invalid');
+                usernameValidationError.text('Username must be at least 5 characters.');
+            } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+                input.addClass('is-invalid');
+                usernameValidationError.text('Username must be alphanumeric.');
+            } else {
+                input.removeClass('is-invalid');
+                usernameValidationError.text('');
+            }
+        }
+
+        // Validating email
+        const emailInput = $('#email');
+
+        emailInput.on('input', function() {
+            validateEmail(emailInput);
+        });
+
+        function validateEmail(input) {
+            const validationError = $('#email-validation-error');
+            const email = input.val();
+
+            if (!email.includes('@')) {
+                input.addClass('is-invalid');
+                validationError.text('Email must contain "@" symbol.');
+            } else {
+                input.removeClass('is-invalid');
+                validationError.text('');
+            }
+        }
+
+        // Validating password
+        const passwordInput = $('#password');
+
+        passwordInput.on('input', function() {
+            validatePassword(passwordInput);
+        });
+
+        function validatePassword(input) {
+            const validationError = $('#password-validation-error');
+            const password = input.val();
+
+            if (password.length < 8) {
+                input.addClass('is-invalid');
+                validationError.text('Password must be at least 8 characters.');
+            } else if (!/^[a-zA-Z0-9]+$/.test(password)) {
+                input.addClass('is-invalid');
+                validationError.text('Password must be alphanumeric.');
+            } else {
+                input.removeClass('is-invalid');
+                validationError.text('');
+            }
+        }
+
+        // Checking password confirmation
+        const confirmPasswordInput = $('#password-confirm');
+
+        confirmPasswordInput.on('input', function() {
+            validatePasswordConfirmation(passwordInput, confirmPasswordInput);
+        });
+
+        function validatePasswordConfirmation(passwordInput, confirmPasswordInput) {
+            const validationError = $('#password-confirm-validation-error');
+            const password = passwordInput.val();
+            const passwordConfirm = confirmPasswordInput.val();
+
+            if (password !== passwordConfirm) {
+                confirmPasswordInput.addClass('is-invalid');
+                validationError.text('Passwords do not match.');
+            } else {
+                confirmPasswordInput.removeClass('is-invalid');
+                validationError.text('');
+            }
         }
     });
-    //validating username
-    const usernameInput = document.getElementById('username');
-
-    usernameInput.addEventListener('input', () => {
-        validateUsername(usernameInput);
-    });
-
-    function validateUsername(input) {
-        const validationError = document.getElementById('username-validation-error');
-        const username = input.value;
-
-        if (username.length < 5) {
-            input.classList.add('is-invalid');
-            validationError.textContent = 'Username must be at least 5 characters.';
-        } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
-            input.classList.add('is-invalid');
-            validationError.textContent = 'Username must be alphanumeric.';
-        } else {
-            input.classList.remove('is-invalid');
-            validationError.textContent = '';
-        }
-    }
-
-
-    //validating email
-    const emailInput = document.getElementById('email');
-
-    emailInput.addEventListener('input', () => {
-        validateEmail(emailInput);
-    });
-
-    function validateEmail(input) {
-        const validationError = document.getElementById('email-validation-error');
-        const email = input.value;
-
-        if (!email.includes('@')) {
-            input.classList.add('is-invalid');
-            validationError.textContent = 'Email must contain "@" symbol.';
-        } else {
-            input.classList.remove('is-invalid');
-            validationError.textContent = '';
-        }
-    }
-
-    //validating password
-    const passwordInput = document.getElementById('password');
-
-    passwordInput.addEventListener('input', () => {
-        validatePassword(passwordInput);
-    });
-
-    function validatePassword(input) {
-        const validationError = document.getElementById('password-validation-error');
-        const password = input.value;
-
-        if (password.length < 8) {
-            input.classList.add('is-invalid');
-            validationError.textContent = 'Password must be at least 8 characters.';
-        } else if (!/^[a-zA-Z0-9]+$/.test(password)) {
-            input.classList.add('is-invalid');
-            validationError.textContent = 'Password must be alphanumeric.';
-        } else {
-            input.classList.remove('is-invalid');
-            validationError.textContent = '';
-        }
-    }
-
-    //checking password confirmation
-
-    const confirmpasswordInput = document.getElementById('password');
-    const passwordConfirmInput = document.getElementById('password-confirm');
-
-    passwordConfirmInput.addEventListener('input', () => {
-        validatePasswordConfirmation(confirmpasswordInput, passwordConfirmInput);
-    });
-
-    function validatePasswordConfirmation(confirmpasswordInput, passwordConfirmInput) {
-        const validationError = document.getElementById('password-confirm-validation-error');
-        const password = confirmpasswordInput.value;
-        const passwordConfirm = passwordConfirmInput.value;
-
-        if (password !== passwordConfirm) {
-            passwordConfirmInput.classList.add('is-invalid');
-            validationError.textContent = 'Passwords do not match.';
-        } else {
-            passwordConfirmInput.classList.remove('is-invalid');
-            validationError.textContent = '';
-        }
-    }
 </script>
 
 @endsection

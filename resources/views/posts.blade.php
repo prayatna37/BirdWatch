@@ -104,27 +104,29 @@
         });
     });
 
-    //image validation
-    const fileInput = document.getElementById('image');
+    $(document).ready(function() {
+        // Image validation
+        const fileInput = $('#image');
 
-    fileInput.addEventListener('change', () => {
-        validateImageFileType(fileInput);
-    });
+        fileInput.on('change', function() {
+            validateImageFileType(fileInput);
+        });
 
-    function validateImageFileType(fileInput) {
-        const validationError = document.getElementById('image-validation-error');
-        const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        const selectedFileName = fileInput.value;
-        const fileExtension = selectedFileName.split('.').pop().toLowerCase();
+        function validateImageFileType(input) {
+            const validationError = $('#image-validation-error');
+            const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            const selectedFileName = input.val();
+            const fileExtension = selectedFileName.split('.').pop().toLowerCase();
 
-        if (!allowedExtensions.includes(fileExtension)) {
-            fileInput.classList.add('is-invalid');
-            validationError.textContent = 'Please select a valid image file (jpg, jpeg, png, gif).';
-        } else {
-            fileInput.classList.remove('is-invalid');
-            validationError.textContent = '';
+            if (!allowedExtensions.includes(fileExtension)) {
+                input.addClass('is-invalid');
+                validationError.text('Please select a valid image file (jpg, jpeg, png, gif).');
+            } else {
+                input.removeClass('is-invalid');
+                validationError.text('');
+            }
         }
-    }
+    });
 </script>
 
 @endsection
